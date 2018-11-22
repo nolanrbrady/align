@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "reason-scripts": "1.0.0"
+    "reason-scripts": "1.0.0",
+    "reductive": "github:reasonml-community/reductive"
   },
   "scripts": {
     "start": "react-scripts start",

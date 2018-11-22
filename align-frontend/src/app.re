@@ -2,20 +2,35 @@
 
 [@bs.module] external logo : string = "./logo.svg";
 
-let component = ReasonReact.statelessComponent("App");
+type page = 
+  | Dashboard
+  | Users;
 
-let make = (~message, _children) => {
+type state = { route: page }
+
+type action =
+  | UpdatePage(page);
+
+let component = ReasonReact.reducerComponent("App");
+
+let make = _children => {
   ...component,
-  render: _self =>
+  initialState: () => {
+    route: Dashboard
+  },
+  
+  reducer: (action, _state) =>
+  switch (action) {
+  | UpdatePage(route) => ReasonReact.Update({ route: route });
+  },
+
+  render: ({ state }) =>
     <div className="App">
-      <div className="App-header">
-        <img src=logo className="App-logo" alt="logo" />
-        <h2> (ReasonReact.string(message)) </h2>
-      </div>
-      <p className="App-intro">
-        (ReasonReact.string("To get started, edit"))
-        <code> (ReasonReact.string(" src/app.re ")) </code>
-        (ReasonReact.string("and save to reload."))
-      </p>
+     (
+       switch (state.route){
+       | Dashboard => <Dashboard />
+       | Users => <Users />
+       }
+     )
     </div>,
 };
